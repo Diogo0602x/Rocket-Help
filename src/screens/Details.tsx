@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 import { HStack, Text, VStack, useTheme, ScrollView } from 'native-base';
-import { useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import firestore from '@react-native-firebase/firestore';
 import { OrderFirestoreDTO } from '../DTOs/OrderFirestoreDTO';
 import { CircleWavyCheck, Hourglass, DesktopTower, Clipboard } from 'phosphor-react-native';
@@ -29,9 +30,34 @@ export function Details() {
   const [solution, setSolution] = useState('');
   const [order, setOrder] = useState<OrderDetails>({} as OrderDetails);
   
-  const { colors } = useTheme();
+  const navigation = useNavigation();
   const route = useRoute();
+  const { colors } = useTheme();
+  
   const { orderId } = route.params as RouteParams;
+
+  function handleOrderClose() {
+    if(!solution) {
+      return Alert.alert('Solicitação', 'Informe a solução para encerrar a solicitação');
+    }
+
+    firestore()
+    .collection<OrderFirestoreDTO>('orders')
+    .doc(orderId)
+    .update({
+      status: 'closed',
+      solution,
+      closed_at: firestore.FieldValue.serverTimestamp()
+    })
+    .then(() => {
+      Alert.alert('Solicitação', 'Solicitação encerrada.')
+      navigation.goBack();
+    })
+    .catch((error) => {
+      console.log(error);
+      Alert.alert('Solicitação', 'Não foi possível encerrar a solicitação.')
+    });
+  }
 
   useEffect(() => {
     firestore()
@@ -98,15 +124,19 @@ export function Details() {
         <CardDetails
           title="solução"
           icon={CircleWavyCheck}
+          description={order.solution}
           footer={order.closed && `Encerrado em ${order.closed}`}
         >
-          <Input 
-            placeholder="Descrição da solução"
-            onChangeText={setSolution}
-            textAlignVertical="top"
-            multiline
-            h={24}
-          />
+          {
+            order.status === 'open' &&
+            <Input 
+              placeholder="Descrição da solução"
+              onChangeText={setSolution}
+              textAlignVertical="top"
+              multiline
+              h={24}
+            />
+          }
         </CardDetails>
       </ScrollView>
 
@@ -115,6 +145,7 @@ export function Details() {
         <Button
           title="Encerrar solicitação"
           m={5}
+          onPress={handleOrderClose}
         />
       }
     </VStack>
