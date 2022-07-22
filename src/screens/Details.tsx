@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
-import { HStack, Text, VStack, useTheme, ScrollView } from 'native-base';
+import { HStack, Text, VStack, useTheme, ScrollView, Box } from 'native-base';
 import { useNavigation, useRoute } from '@react-navigation/native'
 import firestore from '@react-native-firebase/firestore';
 import { OrderFirestoreDTO } from '../DTOs/OrderFirestoreDTO';
-import { CircleWavyCheck, Hourglass, DesktopTower, Clipboard } from 'phosphor-react-native';
+import { CircleWavyCheck, Hourglass, DesktopTower, ClipboardText } from 'phosphor-react-native';
 
 import { dateFormat } from '../utils/firestoreDateFormat';
 
@@ -89,7 +89,9 @@ export function Details() {
 
   return (
     <VStack flex={1} bg="gray.700">
-      <Header title="Solicitação" />
+      <Box px={6} bg="gray.600">
+        <Header title="Solicitação" />
+      </Box>
       <HStack bg="gray.500" justifyContent="center" p={4}>
         {
           order.status === 'closed'
@@ -112,13 +114,13 @@ export function Details() {
           title="equipamento"
           description={`Patrimônio ${order.patrimony}`}
           icon={DesktopTower}
-          footer={order.when}
         />
 
         <CardDetails
           title="descrição do problema"
           description={order.description}
-          icon={Clipboard}
+          icon={ClipboardText}
+          footer={`Registrado em ${order.when}`}
         />
 
         <CardDetails
