@@ -1,19 +1,32 @@
-# Aplicação mobile RocketHelp; Ignite Lab React Native
+![cover](.github/cover.gif?style=flat)
 
-Essa aplicação consiste em uma aplicação mobile para solicitações de chamado.!
 
-![Página Inicial](./public/assets/tela_inicial.PNG)
+## Projeto
+A aplicação para gerenciar em tempo real solicitações de manutenção e suporte a equipamentos.
 
-A plataforma utiliza o **Expo** para fazer o desenvolvimento mobile e o **Firebase** para guardar as informações das patrimônio, descrição do problema, solução, data de criação e de conclusão, etc. 
 
-## Tecnologias/serviços utilizados
+## Stack
 
 - React Native
-- Firebase
-- Expo
 - Typescript
+- Expo Bare Workflow
 - Native Base
+- Firebase
+- Firebase Auth
+- Firebase Firestore with Real Time updates
+- And more...
 
-![Página de solicitações](./public/assets/solicitacoes.PNG)
 
-![Página de detalhes](./public/assets/details.PNG)
+## Funcionalidades
+
+- Autenticação de usuários
+- Criar novas solicitações
+- Filtra solicitações pelo status
+- Encerra solicitação com solução
+- Sincronização com banco de dados em tempo real
+- Entre outras...
+
+## Contato 
+ 
+[![Linkedin Badge](https://img.shields.io/badge/-Diogo%20Sales%20Teixeira-6633cc?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/rodrigo-gon%C3%A7alves-santana/)](https://www.linkedin.com/in/diogo0602x/) 
+</div>
